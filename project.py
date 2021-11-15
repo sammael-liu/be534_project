@@ -25,12 +25,14 @@ def get_args():
                         type=int,
                         choices=range(1, 11),
                         default=4)
+
     parser.add_argument('-t',
                         '--times',
                         help='Number of guesses allowed',
                         metavar='times',
                         type=int,
                         default=5)
+
     parser.add_argument('-s',
                         '--seed',
                         help='Random seed',
@@ -64,7 +66,8 @@ def main():
     print(answer)
 
     user_input = check_input(
-        input('Please input ' + str(num_digits) + ' digits as your guess: '))
+        input('Please input ' + str(num_digits) + ' digits as your guess: '),
+        num_digits)
 
     count_a = 0
     count_b = 0
@@ -85,7 +88,7 @@ def main():
 
         user_input = check_input(
             input('Please input ' + str(num_digits) +
-                  ' digits as your guess: '))
+                  ' digits as your guess: '), num_digits)
     print('Guess number ' + str(times) + ': ' + str(count_a) + 'A' +
           str(count_b) + 'B')
 
@@ -99,12 +102,11 @@ def main():
 
 
 # --------------------------------------------------
-def check_input(user_input):
+def check_input(user_input, num_digits):
     """Check if user inputs: 
     (1) integer only 
     (2) the digits match to what they indicate in --digits"""
 
-    args = get_args()
     if user_input.lower() == 'quit':
         sys.exit('Player decided to quit the game!')
     while True:
@@ -112,15 +114,15 @@ def check_input(user_input):
             int(user_input)
             break
         except:
-            print('Wrong format of input! Please input ' + str(args.digits) +
+            print('Wrong format of input! Please input ' + str(num_digits) +
                   '-digit number! Try again!')
-            user_input = input('Please input ' + str(args.digits) +
+            user_input = input('Please input ' + str(num_digits) +
                                ' digits as your guess: ')
 
-    if len(list(user_input)) != args.digits:
-        print('Wrong format of input! Please input ' + str(args.digits) +
+    if len(list(user_input)) != num_digits:
+        print('Wrong format of input! Please input ' + str(num_digits) +
               '-digit number! Try again!')
-        user_input = input('Please input ' + str(args.digits) +
+        user_input = input('Please input ' + str(num_digits) +
                            ' digits as your guess: ')
     return user_input
 
