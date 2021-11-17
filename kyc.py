@@ -58,11 +58,10 @@ def main():
         rand_ans.append(ind_choose)
         numbers.remove(ind_choose)
 
-    answer = ''
-    for ind in range(num_digits):
-        answer += str(rand_ans[ind])
     # answer = ''
-    # answer += [str(rand_ans[ind]) for ind in range(num_digits)]
+    # for ind in range(num_digits):
+    #     answer += str(rand_ans[ind])
+    answer = ''.join([str(rand_ans[ind]) for ind in range(num_digits)])
     print(answer)
 
     user_input = get_input(num_digits)
