@@ -8,6 +8,7 @@ Purpose: Final Project
 import argparse
 import random
 import sys
+from collections import Counter
 
 
 # --------------------------------------------------
@@ -58,16 +59,10 @@ def main():
         rand_ans.append(ind_choose)
         numbers.remove(ind_choose)
 
-    answer = ''
-    for ind in range(num_digits):
-        answer += str(rand_ans[ind])
-    # answer = ''
-    # answer += [str(rand_ans[ind]) for ind in range(num_digits)]
+    answer = ''.join([str(rand_ans[ind]) for ind in range(num_digits)])
     print(answer)
 
-    user_input = check_input(
-        input('Please input ' + str(num_digits) + ' digits as your guess: '),
-        num_digits)
+    user_input = get_input(num_digits)
 
     count_a = 0
     count_b = 0
@@ -80,66 +75,66 @@ def main():
                     count_a += 1
                 elif user_input[user_ind] == answer[ans_ind]:
                     count_b += 1
-        print('Guess number ' + str(times) + ': ' + str(count_a) + 'A' +
-              str(count_b) + 'B')
+        print(f'Guess number {times}: {count_a}A{count_b}B')
         count_a = 0
         count_b = 0
         times += 1
 
-        user_input = check_input(
-            input('Please input ' + str(num_digits) +
-                  ' digits as your guess: '), num_digits)
-    print('Guess number ' + str(times) + ': ' + str(count_a) + 'A' +
-          str(count_b) + 'B')
+        user_input = get_input(num_digits)
+
+    print(f'Guess number {times}: {count_a}A{count_b}B')
 
     if user_input == answer:
         print(
-            'Congratulations! You made the correct guess and the answer is ' +
-            answer + '.')
+            f'Congratulations! You made the correct guess and the answer is {answer}.'
+        )
     else:
-        print('Game Over! You already tried ' + str(args.times) +
-              ' times and the answer is ' + answer + '.')
+        print(
+            f'Game Over! You already tried {args.times} times and the answer is answer {answer}.'
+        )
 
 
 # --------------------------------------------------
-def check_input(user_input, num_digits):
+def get_input(digits: int) -> str:
     """Check if user inputs: 
     (1) integer only 
-    (2) the digits match to what they indicate in --digits"""
+    (2) the digits match to what they indicate in --digits
+    (3) cannot have duplicates"""
 
-    if user_input.lower() == 'quit':
-        sys.exit('Player decided to quit the game!')
+    prompt = f'Please input {str(digits)} digits as your guess (q to quit): '
+
     while True:
-        try:
-            int(user_input)
-            break
-        except:
-            print('Wrong format of input! Please input ' + str(num_digits) +
-                  '-digit number! Try again!')
-            user_input = input('Please input ' + str(num_digits) +
-                               ' digits as your guess: ')
+        user_input = input(prompt)
+        if user_input.lower().startswith('q'):
+            sys.exit('Player decided to quit the game!')
 
-    if len(list(user_input)) != num_digits:
-        print('Wrong format of input! Please input ' + str(num_digits) +
-              '-digit number! Try again!')
-        user_input = input('Please input ' + str(num_digits) +
-                           ' digits as your guess: ')
+        if not user_input.isdigit():
+            print(f'Error! "{user_input}" is not a number')
+            continue
+        elif len(user_input) != digits:
+            print(f'Error! "{user_input}" is not {digits} digits long')
+            continue
+        elif len(list(Counter(user_input).values())) != digits:
+            print(f'Error! There are duplicate digits in "{user_input}"')
+            continue
+        else:
+            break
+
     return user_input
 
 
 # --------------------------------------------------
-def test_check_input():
-    """Test check_input"""
+def test_get_input():
+    """Test get_input"""
 
-    test1 = '1234'
-    assert check_input(test1) == '1234'
+    test1 = '123'
+    assert get_input(4) == '1234'
     test2 = '123'
-    assert check_input(test2) == ''.join(
+    assert get_input(test2) == ''.join(
         'Wrong format of input! Please input 4-digit number!')
     test3 = '123e'
-    assert check_input(test3) == ''.join(
+    assert get_input(test3) == ''.join(
         'Wrong format of input! Please input 4-digit number!')
-
 
 # --------------------------------------------------
 if __name__ == '__main__':
