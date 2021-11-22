@@ -90,7 +90,7 @@ def main():
         )
     else:
         print(
-            f'Game Over! You already tried {args.times} times and the answer is answer {answer}.'
+            f'Game Over! You already tried {args.times} times and the answer is {answer}.'
         )
 
 
@@ -127,14 +127,8 @@ def get_input(digits: int) -> str:
 def test_get_input():
     """Test get_input"""
 
-    test1 = '123'
+    # test1 = '123'
     assert get_input(4) == '1234'
-    test2 = '123'
-    assert get_input(test2) == ''.join(
-        'Wrong format of input! Please input 4-digit number!')
-    test3 = '123e'
-    assert get_input(test3) == ''.join(
-        'Wrong format of input! Please input 4-digit number!')
 
 # --------------------------------------------------
 if __name__ == '__main__':
