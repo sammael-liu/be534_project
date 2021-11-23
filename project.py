@@ -32,7 +32,7 @@ def get_args():
                         help='Number of guesses allowed',
                         metavar='times',
                         type=int,
-                        default=5)
+                        default=10)
 
     parser.add_argument('-s',
                         '--seed',
