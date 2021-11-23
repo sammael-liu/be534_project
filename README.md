@@ -24,4 +24,17 @@ One "A" is from the digit 2 in the right position, and two "B" are from 1 and 3 
 ## Setup
 There are three optional arguments you can have as the inputs to setup the game:
 
--d/--digits: Number of digits to play
+-d/--digits: Number of digits to play, default: 4 digits
+
+-t/--times: Number of guesses allowed, default: 10 times
+
+-s/--seed: Random seed, default: None (This input is not needed if you do not want to have the same secret number to guess.)
+
+## Restrictions on the guess input
+There are three restrictions on the guess that the player can input:
+
+1. The input can only be the integer number. The other characters are not allowed.
+2. The number of digits in the input should be the same as the one the player uses when setting up the game.
+3. No duplicate digits are allowed. All the digits in the input should be different.
+
+Let's have fun and play the game!
