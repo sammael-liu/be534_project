@@ -14,7 +14,7 @@ import sys
 from contextlib import contextmanager
 from io import StringIO
 from unittest.mock import patch
-from typing import Optional
+from typing import Tuple
 
 
 # --------------------------------------------------
@@ -119,16 +119,16 @@ def get_input(digits: int) -> str:
         if user_input.lower().startswith('q'):
             sys.exit('Player decided to quit the game!')
 
-        user_input, error = check_input(digits, user_input)
+        checked, error = check_input(digits, user_input)
 
         if error:
             print(error)
         else:
-            return user_input
+            return checked
 
 
 # --------------------------------------------------
-def check_input(digits: int, value: str) -> (Optional[str], Optional[str]):
+def check_input(digits: int, value: str) -> Tuple[str, str]:
     """
     Check input from user
     Upon success, return (valid input, None)
@@ -136,15 +136,15 @@ def check_input(digits: int, value: str) -> (Optional[str], Optional[str]):
     """
 
     if not value.isdigit():
-        return (None, f'Error! "{value}" is not a number')
+        return ('', f'Error! "{value}" is not a number')
 
     if len(value) != digits:
-        return (None, f'Error! "{value}" is not {digits} digits long')
+        return ('', f'Error! "{value}" is not {digits} digits long')
 
     if len(list(Counter(value).values())) != digits:
-        return (None, f'Error! There are duplicate digits in "{values}"')
+        return ('', f'Error! There are duplicate digits in "{value}"')
 
-    return (value, None)
+    return (value, '')
 
 
 # --------------------------------------------------
