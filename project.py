@@ -72,7 +72,7 @@ def main():
         numbers.remove(ind_choose)
 
     answer = ''.join([str(rand_ans[ind]) for ind in range(num_digits)])
-    print(answer)
+    # print(answer)
 
     user_input = args.answer or get_input(num_digits)
 
