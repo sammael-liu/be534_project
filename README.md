@@ -30,7 +30,7 @@ There are three optional arguments you can have as the inputs to setup the game:
 
 -s/--seed: Random seed, default: None (This input is not needed if you do not want to have the same secret number to guess.)
 
--a/--answer: This is an argument used to test program. The player can ignore it.
+-a/--answer: This is an argument used to test the program. The player can ignore it.
 
 ## Restrictions on the guess input
 There are three restrictions on the guess that the player can input:
