@@ -9,6 +9,11 @@ import argparse
 import random
 import sys
 from collections import Counter
+from unittest import mock
+import sys
+from contextlib import contextmanager
+from io import StringIO
+from unittest.mock import patch
 
 
 # --------------------------------------------------
@@ -123,12 +128,33 @@ def get_input(digits: int) -> str:
     return user_input
 
 
+@contextmanager
+def replace_stdin(target):
+    orig = sys.stdin
+    sys.stdin = target
+    yield
+    sys.stdin = orig
+
+def __get_input(text):
+    return input(text)
+    
+@patch('get_input.__get_input', return_value='123')
+
+# https://stackoverflow.com/questions/35851323/how-to-test-a-function-with-input-call
 # --------------------------------------------------
 def test_get_input():
     """Test get_input"""
 
-    # test1 = '123'
-    assert get_input(4) == '1234'
+    # with mock.patch.object(__builtins__, 'input', lambda _: '123'):
+    #     assert get_input(4) == 'Error! "123" is not 4 digits long'
+
+    # with monkeypatch.setattr('builtins.input', lambda _: "123"):
+    #     assert get_input(4) == 'Error! "123" is not 4 digits long'
+
+    # with replace_stdin(StringIO("123")):
+    #     assert get_input(4) == 'Error! "123" is not 4 digits long'
+
+    assert get_input(4) == 'Error! "123" is not 4 digits long'
 
 # --------------------------------------------------
 if __name__ == '__main__':
